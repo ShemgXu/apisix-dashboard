@@ -117,21 +117,24 @@ import LangSelect from '@/components/LangSelect/index.vue'
 export default class extends Vue {
   private validateUsername = (rule: any, value: string, callback: Function) => {
     if (!isValidUsername(value)) {
-      callback(new Error('Please enter the correct user name'))
+      callback(new Error('请输入正确的用户名'))
     } else {
       callback()
     }
   }
   private validatePassword = (rule: any, value: string, callback: Function) => {
     if (value.length < 6) {
-      callback(new Error('The password can not be less than 6 digits'))
+      callback(new Error('密码不能少于6位'))
     } else {
       callback()
     }
   }
   private loginForm = {
-    username: 'admin',
-    password: '111111'
+    username: '',
+    password: ''
+  }
+  private loginMessage = {
+    message: ''
   }
   private loginRules = {
     username: [{ validator: this.validateUsername, trigger: 'blur' }],
@@ -177,7 +180,13 @@ export default class extends Vue {
     (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
       if (valid) {
         this.loading = true
-        await UserModule.Login(this.loginForm)
+        let loginResult = await UserModule.Login(this.loginForm)
+        if (loginResult.status !== 0) {
+          this.loading = false
+          this.$message(loginResult.message)
+          return false
+        }
+
         this.$router.push({
           path: this.redirect || '/',
           query: this.otherQuery

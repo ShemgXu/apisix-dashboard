@@ -37,7 +37,7 @@
         to="/"
       >
         <img
-          src="favicon.ico"
+          :src="faviconUrl"
           class="sidebar-logo"
         >
       </router-link>
@@ -48,7 +48,7 @@
         to="/"
       >
         <img
-          src="favicon.ico"
+          :src="faviconUrl"
           class="sidebar-logo"
         >
         <h1 class="sidebar-title">
@@ -69,6 +69,19 @@ export default class extends Vue {
   @Prop({ required: true }) private collapse!: boolean
 
   private title = 'APISIX'
+  private faviconUrl = ''
+
+  mounted() {
+    window.console.log('>>>>>>>>>>>>')
+    window.console.log(process.env.NODE_ENV)
+    if (process.env.NODE_ENV === 'development') {
+      window.console.log('development')
+      this.faviconUrl = '/favicon.ico'
+    } else {
+      window.console.log('prod')
+      this.faviconUrl = '/apisix/dashboard/favicon.ico'
+    }
+  }
 }
 </script>
 
