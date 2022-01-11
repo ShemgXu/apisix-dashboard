@@ -121,7 +121,7 @@
         class="node-item"
       >
         <el-form-item
-          :rules="[{required: true, pattern: IPAndURLRegexp, type: 'string'}]"
+          :rules="[{required: true, type: 'string'}]"
           :prop="'nodes.' + index + '.ip'"
         >
           <el-input
