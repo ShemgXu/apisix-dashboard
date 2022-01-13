@@ -29,7 +29,9 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
-import { ADMIN_PWD } from '@/config'
+
+import { checkAccount } from '../../api/schema/account'
+import md5 from 'js-md5'
 
 export interface IUserState {
   token: string
@@ -83,19 +85,12 @@ class User extends VuexModule implements IUserState {
   public async Login(userInfo: { username: string, password: string}) {
     let { username, password } = userInfo
     username = username.trim()
-    // TEMP: 在此处绕过登录
-    // const { data } = await login({ username, password })
-    if (userInfo.username !== 'admin') {
-      return {
-        status: -1,
-        message: '用户名不存在'
-      }
-    }
-    if (userInfo.password !== ADMIN_PWD) {
-      return {
-        status: -1,
-        message: '密码错误'
-      }
+    let loginResult = await checkAccount({
+      username: username,
+      password: md5(password)
+    })
+    if (loginResult.status !== 0) {
+      return loginResult
     }
 
     const data = {

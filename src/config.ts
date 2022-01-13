@@ -1,2 +1,1 @@
-export const API_KEY = 'edd1c9f034335f136f87ad84b625c8f1'
-export const ADMIN_PWD = 'ylz@2022'
+export const API_KEY = '07E20374005D0FDE04CA5EDC8419E619'

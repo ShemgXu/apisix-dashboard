@@ -46,6 +46,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.2",
     "fibers": "^4.0.1",
+    "js-md5": "^0.7.3",
     "lint-staged": "^8.2.1",
     "sass": "^1.21.0",
     "sass-loader": "^7.1.0",

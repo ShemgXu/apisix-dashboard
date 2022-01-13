@@ -24,6 +24,7 @@
 #
 -->
 
+<script src="../../../node_modules/js-md5/src/md5.js"></script>
 <template>
   <div class="login-container">
     <el-form
@@ -183,7 +184,7 @@ export default class extends Vue {
         let loginResult = await UserModule.Login(this.loginForm)
         if (loginResult.status !== 0) {
           this.loading = false
-          this.$message(loginResult.message)
+          this.$message(loginResult['message'])
           return false
         }
 
